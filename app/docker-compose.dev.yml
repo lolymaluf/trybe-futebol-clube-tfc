@@ -1,3 +1,5 @@
+#docker compose do ambiente de desenvolvimento
+
 version: '3.9'
 services:
   frontend:
@@ -21,6 +23,7 @@ services:
       - 3001:3001
     working_dir: /app-backend
     command: npm run dev
+    #Quando o compose fizer o UP, ele executa este comando (nodemon)
     volumes: 
       - ./backend/src:/app-backend/src
     depends_on:

@@ -1,19 +1,11 @@
-/* import { ITeam } from './teams.interfaces';
+import { ITeam } from './teams.interfaces';
 
 export interface IMatch {
-  id?: number;
+  id: number;
   homeTeam: number;
+  homeTeamGoals: number;
   awayTeam: number;
-  homeTeamGoals: number;
   awayTeamGoals: number;
-  inProgress?: number | boolean;
-  teamHome?: ITeam;
-  teamAway?: ITeam;
+  teamHome?: ITeam,
+  teamAway?: ITeam
 }
-
-export interface IGoals {
-  id: number | string;
-  homeTeamGoals: number;
-  awayTeamGoals: number;
-}
- */

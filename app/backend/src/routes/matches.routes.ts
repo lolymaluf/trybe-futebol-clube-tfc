@@ -1,9 +1,9 @@
 import { Router } from 'express';
 import MatchesController from '../controllers/matches.controller';
 
-const router = Router();
+const route = Router();
 const matchesController = new MatchesController();
 
-router.get('/matches', matchesController.getAllMatches);
+route.get('/matches', matchesController.getAll);
 
-export default router;
+export default route;

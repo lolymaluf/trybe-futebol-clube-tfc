@@ -1,29 +1,24 @@
-import TeamModel from '../database/models/TeamsModel';
-import MatchesModel from '../database/models/MatchesModel';
+import Team from '../database/models/TeamsModel';
+import { IMatch } from '../interfaces/matches.interfaces';
+import Match from '../database/models/MatchesModel';
 
-export default class MatchService {
-  private _matchesModel = MatchesModel;
-  private _teamModel = TeamModel;
-
-  public async getAllMatches() {
-    const findMatches = await this._matchesModel.findAll({
+export default class MatchesServices {
+  private model = Match;
+  getAll = async (): Promise<IMatch[] | null> => {
+    const matches = await this.model.findAll({
       include: [
-        { model: this._teamModel, as: 'teamHome', attributes: ['teamName'] },
-        { model: this._teamModel, as: 'teamAway', attributes: ['teamName'] },
+        {
+          model: Team,
+          as: 'teamHome',
+          attributes: { exclude: ['id'] },
+        },
+        {
+          model: Team,
+          as: 'teamAway',
+          attributes: { exclude: ['id'] },
+        },
       ],
     });
-
-    return findMatches;
-  }
-
-  public async matchInProgress(status: boolean) {
-    const findMatches = await this._matchesModel.findAll({
-      where: { inProgress: status },
-      include: [
-        { model: this._teamModel, as: 'teamHome', attributes: ['teamName'] },
-        { model: this._teamModel, as: 'teamAway', attributes: ['teamName'] },
-      ],
-    });
-    return findMatches;
-  }
+    return matches;
+  };
 }

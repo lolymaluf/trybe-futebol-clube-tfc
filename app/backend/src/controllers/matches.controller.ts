@@ -1,29 +1,12 @@
-import { NextFunction, Response, Request } from 'express';
-import MatchesService from '../services/matches.service';
+import { Request, Response } from 'express';
+import MatchesServices from '../services/matches.service';
 
-export default class MatchController {
-  private _matchesService: MatchesService;
+const matchesServices = new MatchesServices();
 
-  constructor() {
-    this._matchesService = new MatchesService();
-    this.getAllMatches = this.getAllMatches.bind(this);
-  }
+export default class MatchesController {
+  getAll = async (req: Request, res: Response) => {
+    const matches = await matchesServices.getAll();
 
-  public async getAllMatches(req: Request, res: Response, next: NextFunction) {
-    try {
-      const matches = await this._matchesService.getAllMatches();
-
-      const { inProgress } = req.query as { inProgress: string };
-
-      if (inProgress) {
-        const filter = JSON.parse(inProgress);
-        const result = await this._matchesService.matchInProgress(filter);
-        return res.status(200).json(result);
-      }
-
-      return res.status(200).json(matches);
-    } catch (error) {
-      next(error);
-    }
-  }
+    return res.status(200).json(matches);
+  };
 }

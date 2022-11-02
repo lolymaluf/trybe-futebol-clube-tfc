@@ -7,10 +7,14 @@ import { ILogin, ITokenLogin, IReturnLogin } from '../interfaces/login.interface
 export default class LoginService {
   public login = async ({ email, password }: ILogin):Promise <ITokenLogin | IReturnLogin> => {
     const user = await UserModel.findOne({ where: { email } });
-    if (!user) return ({ code: 401, message: 'Incorrect email or password' });
+    if (!user) {
+      return ({ code: 401, message: 'Incorrect email or password' });
+    }
 
     const bcryptCheck = await bcrypt.compare(password, user.password);
-    if (!bcryptCheck) return ({ code: 401, message: 'Incorrect email or password' });
+    if (!bcryptCheck) {
+      return ({ code: 401, message: 'Incorrect email or password' });
+    }
 
     const token = TokenManager.makeToken(user);
     return { code: null, message: token };

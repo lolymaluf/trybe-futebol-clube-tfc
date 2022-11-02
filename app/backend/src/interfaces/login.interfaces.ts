@@ -16,6 +16,6 @@ export interface ITokenLogin {
 }
 
 export interface IReturnLogin{
-  code: number | null;
-  message: string;
+  code: number | null,
+  message: string,
 }
